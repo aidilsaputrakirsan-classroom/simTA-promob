@@ -55,24 +55,40 @@ export default function UsersScreen({ navigation }) {
   };
 
   const renderItem = ({ item }) => (
-    <Card style={styles.card}>
+    <Card 
+      style={styles.card}
+      theme={{ colors: { surface: '#ffffff' } }}
+    >
       <Card.Content>
         <View style={styles.header}>
-          <Title>{item.nama}</Title>
-          <Chip mode="flat" style={{ backgroundColor: getRoleColor(item.role) }}>
+          <Title style={styles.cardTitle}>{item.nama}</Title>
+          <Chip 
+            mode="flat" 
+            style={{ backgroundColor: getRoleColor(item.role) }}
+            textStyle={styles.chipText}
+          >
             {item.role}
           </Chip>
         </View>
         
-        <Paragraph>{item.email}</Paragraph>
-        {item.nim && <Paragraph>NIM: {item.nim}</Paragraph>}
-        {item.nip && <Paragraph>NIP: {item.nip}</Paragraph>}
+        <Paragraph style={styles.email}>{item.email}</Paragraph>
+        {item.nim && (
+          <Paragraph style={styles.subtitle}>NIM: {item.nim}</Paragraph>
+        )}
+        {item.nip && (
+          <Paragraph style={styles.subtitle}>NIP: {item.nip}</Paragraph>
+        )}
         
         <View style={styles.actions}>
           <Button
             mode="outlined"
             onPress={() => handleDelete(item.id, item.nama)}
             textColor="#F44336"
+            theme={{
+              colors: {
+                outline: '#F44336',
+              }
+            }}
           >
             Delete
           </Button>
@@ -91,7 +107,7 @@ export default function UsersScreen({ navigation }) {
         onRefresh={loadUsers}
         ListEmptyComponent={
           <View style={styles.empty}>
-            <Paragraph>No users found</Paragraph>
+            <Paragraph style={styles.emptyText}>No users found</Paragraph>
           </View>
         }
       />
@@ -107,12 +123,32 @@ const styles = StyleSheet.create({
   card: {
     margin: 10,
     elevation: 2,
+    backgroundColor: '#ffffff',
+  },
+  cardTitle: {
+    color: '#2c3e50',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 10,
+  },
+  chipText: {
+    color: '#ffffff',
+    fontWeight: '600',
+  },
+  email: {
+    color: '#4a4a4a',
+    fontSize: 14,
+    marginBottom: 3,
+  },
+  subtitle: {
+    color: '#666666',
+    fontSize: 13,
+    marginTop: 2,
   },
   actions: {
     flexDirection: 'row',
@@ -122,5 +158,9 @@ const styles = StyleSheet.create({
   empty: {
     padding: 20,
     alignItems: 'center',
+  },
+  emptyText: {
+    color: '#666666',
+    fontSize: 14,
   },
 });

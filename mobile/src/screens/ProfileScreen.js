@@ -23,9 +23,12 @@ export default function ProfileScreen({ user, setUser }) {
 
   return (
     <View style={styles.container}>
-      <Card style={styles.card}>
+      <Card 
+        style={styles.card}
+        theme={{ colors: { surface: '#ffffff' } }}
+      >
         <Card.Content>
-          <Title>Profile</Title>
+          <Title style={styles.cardTitle}>Profile</Title>
           <Divider style={styles.divider} />
           
           <Paragraph style={styles.label}>Nama:</Paragraph>
@@ -73,18 +76,27 @@ const styles = StyleSheet.create({
   },
   card: {
     elevation: 2,
+    backgroundColor: '#ffffff',
+  },
+  cardTitle: {
+    color: '#2c3e50',
+    fontSize: 22,
+    fontWeight: 'bold',
   },
   divider: {
     marginVertical: 15,
+    backgroundColor: '#e0e0e0',
   },
   label: {
     fontWeight: 'bold',
     marginTop: 10,
-    color: '#666',
+    color: '#2c3e50',
+    fontSize: 14,
   },
   value: {
     fontSize: 16,
     marginBottom: 5,
+    color: '#4a4a4a',
   },
   logoutButton: {
     marginTop: 20,

@@ -59,6 +59,12 @@ export default function UploadProposalScreen({ route, navigation }) {
         onPress={pickDocument}
         style={styles.button}
         icon="file-document"
+        textColor="#3498db"
+        theme={{
+          colors: {
+            outline: '#3498db',
+          }
+        }}
       >
         {file ? 'Change File' : 'Select PDF File'}
       </Button>
@@ -86,19 +92,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 30,
+    color: '#2c3e50',
   },
   button: {
     marginBottom: 15,
+    backgroundColor: '#ffffff',
+    borderWidth: 1.5,
   },
   fileName: {
     marginBottom: 20,
-    color: '#666',
+    color: '#4a4a4a',
+    fontSize: 14,
+    fontStyle: 'italic',
   },
   uploadButton: {
     marginTop: 20,

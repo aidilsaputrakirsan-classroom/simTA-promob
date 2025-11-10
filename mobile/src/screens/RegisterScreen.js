@@ -42,7 +42,10 @@ export default function RegisterScreen({ navigation, setUser }) {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView 
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+    >
       <Title style={styles.title}>Register</Title>
       
       <TextInput
@@ -51,6 +54,15 @@ export default function RegisterScreen({ navigation, setUser }) {
         onChangeText={(text) => setFormData({ ...formData, nama: text })}
         mode="outlined"
         style={styles.input}
+        textColor="#000000"
+        outlineColor="#cccccc"
+        activeOutlineColor="#3498db"
+        theme={{
+          colors: {
+            background: '#ffffff',
+            onSurfaceVariant: '#666666',
+          }
+        }}
       />
       
       <TextInput
@@ -61,6 +73,15 @@ export default function RegisterScreen({ navigation, setUser }) {
         style={styles.input}
         autoCapitalize="none"
         keyboardType="email-address"
+        textColor="#000000"
+        outlineColor="#cccccc"
+        activeOutlineColor="#3498db"
+        theme={{
+          colors: {
+            background: '#ffffff',
+            onSurfaceVariant: '#666666',
+          }
+        }}
       />
       
       <TextInput
@@ -70,6 +91,15 @@ export default function RegisterScreen({ navigation, setUser }) {
         mode="outlined"
         style={styles.input}
         secureTextEntry
+        textColor="#000000"
+        outlineColor="#cccccc"
+        activeOutlineColor="#3498db"
+        theme={{
+          colors: {
+            background: '#ffffff',
+            onSurfaceVariant: '#666666',
+          }
+        }}
       />
       
       <SegmentedButtons
@@ -90,6 +120,15 @@ export default function RegisterScreen({ navigation, setUser }) {
           onChangeText={(text) => setFormData({ ...formData, nim: text })}
           mode="outlined"
           style={styles.input}
+          textColor="#000000"
+          outlineColor="#cccccc"
+          activeOutlineColor="#3498db"
+          theme={{
+            colors: {
+              background: '#ffffff',
+              onSurfaceVariant: '#666666',
+            }
+          }}
         />
       ) : (
         <TextInput
@@ -98,6 +137,15 @@ export default function RegisterScreen({ navigation, setUser }) {
           onChangeText={(text) => setFormData({ ...formData, nip: text })}
           mode="outlined"
           style={styles.input}
+          textColor="#000000"
+          outlineColor="#cccccc"
+          activeOutlineColor="#3498db"
+          theme={{
+            colors: {
+              background: '#ffffff',
+              onSurfaceVariant: '#666666',
+            }
+          }}
         />
       )}
       
@@ -125,8 +173,11 @@ export default function RegisterScreen({ navigation, setUser }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
+  contentContainer: {
     padding: 20,
-    backgroundColor: '#fff',
+    paddingBottom: 40,
   },
   title: {
     fontSize: 32,
@@ -134,9 +185,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 40,
     marginBottom: 30,
+    color: '#2c3e50',
   },
   input: {
     marginBottom: 15,
+    backgroundColor: '#ffffff',
   },
   segmented: {
     marginBottom: 15,
@@ -147,6 +200,5 @@ const styles = StyleSheet.create({
   },
   linkButton: {
     marginTop: 15,
-    marginBottom: 40,
   },
 });

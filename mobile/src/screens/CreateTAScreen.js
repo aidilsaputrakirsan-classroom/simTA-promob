@@ -47,7 +47,10 @@ export default function CreateTAScreen({ navigation }) {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView 
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+    >
       <Title style={styles.title}>Buat Tugas Akhir Baru</Title>
       
       <TextInput
@@ -56,6 +59,15 @@ export default function CreateTAScreen({ navigation }) {
         onChangeText={(text) => setFormData({ ...formData, judul: text })}
         mode="outlined"
         style={styles.input}
+        textColor="#000000"
+        outlineColor="#cccccc"
+        activeOutlineColor="#3498db"
+        theme={{
+          colors: {
+            background: '#ffffff',
+            onSurfaceVariant: '#666666',
+          }
+        }}
       />
       
       <TextInput
@@ -66,16 +78,32 @@ export default function CreateTAScreen({ navigation }) {
         style={styles.input}
         multiline
         numberOfLines={4}
+        textColor="#000000"
+        outlineColor="#cccccc"
+        activeOutlineColor="#3498db"
+        theme={{
+          colors: {
+            background: '#ffffff',
+            onSurfaceVariant: '#666666',
+          }
+        }}
       />
       
       <Menu
         visible={menuVisible}
         onDismiss={() => setMenuVisible(false)}
+        contentStyle={styles.menuContent}
         anchor={
           <Button
             mode="outlined"
             onPress={() => setMenuVisible(true)}
-            style={styles.input}
+            style={styles.menuButton}
+            textColor="#4a4a4a"
+            theme={{
+              colors: {
+                outline: '#cccccc',
+              }
+            }}
           >
             {selectedDosen ? selectedDosen.nama : 'Pilih Dosen Pembimbing'}
           </Button>
@@ -90,6 +118,7 @@ export default function CreateTAScreen({ navigation }) {
               setMenuVisible(false);
             }}
             title={`${dosen.nama} (${dosen.nip})`}
+            titleStyle={styles.menuItemTitle}
           />
         ))}
       </Menu>
@@ -110,20 +139,36 @@ export default function CreateTAScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
+  contentContainer: {
     padding: 20,
-    backgroundColor: '#fff',
+    paddingBottom: 40,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#2c3e50',
   },
   input: {
     marginBottom: 15,
+    backgroundColor: '#ffffff',
+  },
+  menuButton: {
+    marginBottom: 15,
+    backgroundColor: '#ffffff',
+    borderColor: '#cccccc',
+  },
+  menuContent: {
+    backgroundColor: '#ffffff',
+    marginTop: 8,
+  },
+  menuItemTitle: {
+    color: '#2c3e50',
   },
   button: {
     marginTop: 10,
-    marginBottom: 40,
     paddingVertical: 5,
   },
 });

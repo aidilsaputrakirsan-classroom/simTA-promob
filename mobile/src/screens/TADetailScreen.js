@@ -29,7 +29,11 @@ export default function TADetailScreen({ route, navigation, user }) {
   };
 
   if (loading) {
-    return <View style={styles.container}><Paragraph>Loading...</Paragraph></View>;
+    return (
+      <View style={styles.container}>
+        <Paragraph style={styles.loadingText}>Loading...</Paragraph>
+      </View>
+    );
   }
 
   const getStatusColor = (status) => {
@@ -48,43 +52,65 @@ export default function TADetailScreen({ route, navigation, user }) {
 
   return (
     <ScrollView style={styles.container}>
-      <Card style={styles.card}>
+      <Card 
+        style={styles.card}
+        theme={{ colors: { surface: '#ffffff' } }}
+      >
         <Card.Content>
-          <Title>{ta.judul}</Title>
-          <Chip mode="flat" style={{ backgroundColor: getStatusColor(ta.status), alignSelf: 'flex-start', marginVertical: 10 }}>
+          <Title style={styles.cardTitle}>{ta.judul}</Title>
+          <Chip 
+            mode="flat" 
+            style={{ 
+              backgroundColor: getStatusColor(ta.status), 
+              alignSelf: 'flex-start', 
+              marginVertical: 10 
+            }}
+            textStyle={styles.chipText}
+          >
             {ta.status}
           </Chip>
           
-          <Paragraph style={styles.section}>{ta.deskripsi}</Paragraph>
+          <Paragraph style={styles.description}>{ta.deskripsi}</Paragraph>
           
           <Divider style={styles.divider} />
           
           {ta.mahasiswa && (
             <>
               <Paragraph style={styles.label}>Mahasiswa:</Paragraph>
-              <Paragraph>{ta.mahasiswa.nama} ({ta.mahasiswa.nim})</Paragraph>
+              <Paragraph style={styles.value}>
+                {ta.mahasiswa.nama} ({ta.mahasiswa.nim})
+              </Paragraph>
             </>
           )}
           
           {ta.dosen && (
             <>
               <Paragraph style={styles.label}>Dosen Pembimbing:</Paragraph>
-              <Paragraph>{ta.dosen.nama} ({ta.dosen.nip})</Paragraph>
+              <Paragraph style={styles.value}>
+                {ta.dosen.nama} ({ta.dosen.nip})
+              </Paragraph>
             </>
           )}
         </Card.Content>
       </Card>
       
-      <Card style={styles.card}>
+      <Card 
+        style={styles.card}
+        theme={{ colors: { surface: '#ffffff' } }}
+      >
         <Card.Content>
-          <Title>Proposals</Title>
+          <Title style={styles.cardTitle}>Proposals</Title>
           {proposals.length === 0 ? (
-            <Paragraph>Belum ada proposal</Paragraph>
+            <Paragraph style={styles.emptyText}>Belum ada proposal</Paragraph>
           ) : (
             proposals.map((proposal) => (
               <View key={proposal.id} style={styles.proposalItem}>
                 <Paragraph style={styles.fileName}>{proposal.file_name}</Paragraph>
-                <Chip mode="flat" style={{ backgroundColor: getStatusColor(proposal.status) }}>
+                <Chip 
+                  mode="flat" 
+                  style={{ backgroundColor: getStatusColor(proposal.status) }}
+                  textStyle={styles.chipText}
+                >
                   {proposal.status}
                 </Chip>
                 {proposal.catatan && (
@@ -129,26 +155,48 @@ const styles = StyleSheet.create({
   card: {
     margin: 10,
     elevation: 2,
+    backgroundColor: '#ffffff',
   },
-  section: {
+  cardTitle: {
+    color: '#2c3e50',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  description: {
     marginTop: 10,
+    color: '#4a4a4a',
+    lineHeight: 20,
   },
   divider: {
     marginVertical: 15,
+    backgroundColor: '#e0e0e0',
   },
   label: {
     fontWeight: 'bold',
     marginTop: 10,
+    color: '#2c3e50',
+    fontSize: 14,
+  },
+  value: {
+    color: '#4a4a4a',
+    marginTop: 3,
+  },
+  chipText: {
+    color: '#ffffff',
+    fontWeight: '600',
   },
   proposalItem: {
     marginTop: 15,
     padding: 10,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#fafafa',
     borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
   },
   fileName: {
     fontWeight: 'bold',
     marginBottom: 5,
+    color: '#2c3e50',
   },
   catatan: {
     marginTop: 5,
@@ -164,5 +212,14 @@ const styles = StyleSheet.create({
   uploadButton: {
     margin: 20,
     paddingVertical: 5,
+  },
+  loadingText: {
+    color: '#666',
+    textAlign: 'center',
+    marginTop: 20,
+  },
+  emptyText: {
+    color: '#666',
+    fontStyle: 'italic',
   },
 });

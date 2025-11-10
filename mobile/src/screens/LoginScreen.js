@@ -37,6 +37,15 @@ export default function LoginScreen({ navigation, setUser }) {
         style={styles.input}
         autoCapitalize="none"
         keyboardType="email-address"
+        textColor="#000000"
+        outlineColor="#cccccc"
+        activeOutlineColor="#3498db"
+        theme={{
+          colors: {
+            background: '#ffffff',
+            onSurfaceVariant: '#666666',
+          }
+        }}
       />
       
       <TextInput
@@ -46,6 +55,15 @@ export default function LoginScreen({ navigation, setUser }) {
         mode="outlined"
         style={styles.input}
         secureTextEntry
+        textColor="#000000"
+        outlineColor="#cccccc"
+        activeOutlineColor="#3498db"
+        theme={{
+          colors: {
+            background: '#ffffff',
+            onSurfaceVariant: '#666666',
+          }
+        }}
       />
       
       <Button
@@ -74,16 +92,18 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     justifyContent: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
   },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 40,
+    color: '#2c3e50',
   },
   input: {
     marginBottom: 15,
+    backgroundColor: '#ffffff',
   },
   button: {
     marginTop: 10,

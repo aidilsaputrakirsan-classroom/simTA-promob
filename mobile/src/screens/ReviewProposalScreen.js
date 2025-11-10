@@ -34,6 +34,14 @@ export default function ReviewProposalScreen({ route, navigation }) {
           { value: 'rejected', label: 'Reject' },
         ]}
         style={styles.segmented}
+        theme={{
+          colors: {
+            secondaryContainer: '#4CAF50',
+            onSecondaryContainer: '#ffffff',
+            onSurface: '#424242',
+            outline: '#cccccc',
+          }
+        }}
       />
       
       <TextInput
@@ -44,6 +52,15 @@ export default function ReviewProposalScreen({ route, navigation }) {
         style={styles.input}
         multiline
         numberOfLines={4}
+        textColor="#000000"
+        outlineColor="#cccccc"
+        activeOutlineColor="#3498db"
+        theme={{
+          colors: {
+            background: '#ffffff',
+            onSurfaceVariant: '#666666',
+          }
+        }}
       />
       
       <Button
@@ -63,18 +80,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 30,
+    color: '#2c3e50',
   },
   segmented: {
     marginBottom: 20,
   },
   input: {
     marginBottom: 20,
+    backgroundColor: '#ffffff',
   },
   button: {
     paddingVertical: 5,

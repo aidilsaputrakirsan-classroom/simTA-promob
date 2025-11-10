@@ -35,13 +35,23 @@ export default function HomeScreen({ navigation, user }) {
   };
 
   const renderItem = ({ item }) => (
-    <Card style={styles.card} onPress={() => navigation.navigate('TADetail', { id: item.id })}>
+    <Card 
+      style={styles.card} 
+      onPress={() => navigation.navigate('TADetail', { id: item.id })}
+      theme={{ colors: { surface: '#ffffff' } }}
+    >
       <Card.Content>
-        <Title>{item.judul}</Title>
-        <Paragraph numberOfLines={2}>{item.deskripsi}</Paragraph>
+        <Title style={styles.cardTitle}>{item.judul}</Title>
+        <Paragraph style={styles.cardDescription} numberOfLines={2}>
+          {item.deskripsi}
+        </Paragraph>
         
         <View style={styles.infoRow}>
-          <Chip mode="flat" style={{ backgroundColor: getStatusColor(item.status) }}>
+          <Chip 
+            mode="flat" 
+            style={{ backgroundColor: getStatusColor(item.status) }}
+            textStyle={styles.chipText}
+          >
             {item.status}
           </Chip>
         </View>
@@ -72,7 +82,7 @@ export default function HomeScreen({ navigation, user }) {
         }
         ListEmptyComponent={
           <View style={styles.empty}>
-            <Paragraph>Belum ada tugas akhir</Paragraph>
+            <Paragraph style={styles.emptyText}>Belum ada tugas akhir</Paragraph>
           </View>
         }
       />
@@ -96,11 +106,25 @@ const styles = StyleSheet.create({
   card: {
     margin: 10,
     elevation: 2,
+    backgroundColor: '#ffffff',
+  },
+  cardTitle: {
+    color: '#2c3e50',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  cardDescription: {
+    color: '#4a4a4a',
+    marginTop: 5,
   },
   infoRow: {
     flexDirection: 'row',
     marginTop: 10,
     marginBottom: 5,
+  },
+  chipText: {
+    color: '#ffffff',
+    fontWeight: '600',
   },
   subtitle: {
     fontSize: 12,
@@ -111,10 +135,15 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: 'center',
   },
+  emptyText: {
+    color: '#666',
+    fontSize: 14,
+  },
   fab: {
     position: 'absolute',
     margin: 16,
     right: 0,
     bottom: 0,
+    backgroundColor: '#3498db',
   },
 });
