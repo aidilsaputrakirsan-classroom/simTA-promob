@@ -6,12 +6,13 @@ const authRoutes = require('./routes/auth');
 const tugasAkhirRoutes = require('./routes/tugasAkhir');
 const proposalRoutes = require('./routes/proposals');
 const userRoutes = require('./routes/users');
+const notificationRoutes = require('./routes/notifications');
 
 const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '15mb' })); // Increase limit for file uploads (base64)
 
 // Routes
 app.get('/', (req, res) => {
@@ -22,6 +23,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/tugas-akhir', tugasAkhirRoutes);
 app.use('/api/proposals', proposalRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 // Error handling
 app.use((err, req, res, next) => {

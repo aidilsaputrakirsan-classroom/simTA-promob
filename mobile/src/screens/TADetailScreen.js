@@ -105,10 +105,10 @@ export default function TADetailScreen({ route, navigation, user }) {
           ) : (
             proposals.map((proposal) => (
               <View key={proposal.id} style={styles.proposalItem}>
-                <Paragraph style={styles.fileName}>{proposal.file_name}</Paragraph>
-                <Chip 
-                  mode="flat" 
-                  style={{ backgroundColor: getStatusColor(proposal.status) }}
+                <Paragraph style={styles.fileName}>📄 {proposal.file_name}</Paragraph>
+                <Chip
+                  mode="flat"
+                  style={{ backgroundColor: getStatusColor(proposal.status), marginTop: 5 }}
                   textStyle={styles.chipText}
                 >
                   {proposal.status}
@@ -116,18 +116,34 @@ export default function TADetailScreen({ route, navigation, user }) {
                 {proposal.catatan && (
                   <Paragraph style={styles.catatan}>Catatan: {proposal.catatan}</Paragraph>
                 )}
-                
-                {user?.role === 'dosen' && proposal.status === 'pending' && (
-                  <View style={styles.reviewButtons}>
+
+                <View style={styles.proposalActions}>
+                  <Button
+                    mode="outlined"
+                    onPress={() =>
+                      navigation.navigate('DocumentViewer', {
+                        proposalId: proposal.id,
+                        fileName: proposal.file_name,
+                      })
+                    }
+                    style={styles.viewButton}
+                    icon="eye"
+                  >
+                    View Document
+                  </Button>
+
+                  {user?.role === 'dosen' && proposal.status === 'pending' && (
                     <Button
                       mode="contained"
-                      onPress={() => navigation.navigate('ReviewProposal', { proposalId: proposal.id })}
+                      onPress={() =>
+                        navigation.navigate('ReviewProposal', { proposalId: proposal.id })
+                      }
                       style={styles.reviewButton}
                     >
                       Review
                     </Button>
-                  </View>
-                )}
+                  )}
+                </View>
               </View>
             ))
           )}
@@ -202,6 +218,13 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontStyle: 'italic',
     color: '#666',
+  },
+  proposalActions: {
+    marginTop: 10,
+    gap: 8,
+  },
+  viewButton: {
+    marginTop: 5,
   },
   reviewButtons: {
     marginTop: 10,
