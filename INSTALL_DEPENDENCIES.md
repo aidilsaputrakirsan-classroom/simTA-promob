@@ -37,7 +37,7 @@ Setelah install, cek `package.json` harus ada:
 {
   "dependencies": {
     ...
-    "react-native-webview": "14.2.5",
+    "react-native-webview": "13.12.2",
     ...
   }
 }
