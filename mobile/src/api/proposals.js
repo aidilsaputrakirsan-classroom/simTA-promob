@@ -15,3 +15,13 @@ export const reviewProposal = async (id, status, catatan) => {
   const response = await api.put(`/proposals/${id}/review`, { status, catatan });
   return response.data.data;
 };
+
+export const getProposalFileUrl = async (id) => {
+  const response = await api.get(`/proposals/${id}/file-url`);
+  return response;
+};
+
+export const deleteProposal = async (id) => {
+  const response = await api.delete(`/proposals/${id}`);
+  return response.data;
+};
