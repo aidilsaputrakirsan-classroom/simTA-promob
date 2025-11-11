@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Dimensions, Alert, ActivityIndicator } from 'react-native';
-import { Title, Button, Paragraph } from 'react-native-paper';
-import Pdf from 'react-native-pdf';
+import { View, StyleSheet, Alert, ActivityIndicator, Platform } from 'react-native';
+import { Paragraph, Button } from 'react-native-paper';
+import { WebView } from 'react-native-webview';
 import { getProposalFileUrl } from '../api/proposals';
 
 export default function DocumentViewerScreen({ route, navigation }) {
   const { proposalId, fileName } = route.params;
   const [fileUrl, setFileUrl] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
+  const [webViewLoading, setWebViewLoading] = useState(true);
 
   useEffect(() => {
     loadFile();
@@ -19,7 +18,16 @@ export default function DocumentViewerScreen({ route, navigation }) {
     try {
       setLoading(true);
       const response = await getProposalFileUrl(proposalId);
-      setFileUrl(response.data.file_url);
+      const url = response.data.file_url;
+
+      // For PDF viewing in WebView, we use Google Docs Viewer for cross-platform compatibility
+      // This works better than direct PDF URL in WebView
+      const viewerUrl = Platform.select({
+        web: url, // Direct URL for web
+        default: `https://docs.google.com/viewer?url=${encodeURIComponent(url)}&embedded=true`,
+      });
+
+      setFileUrl(viewerUrl);
     } catch (error) {
       console.error('Load file error:', error);
       Alert.alert(
@@ -61,28 +69,32 @@ export default function DocumentViewerScreen({ route, navigation }) {
     <View style={styles.container}>
       <View style={styles.header}>
         <Paragraph style={styles.fileName} numberOfLines={1}>
-          {fileName || 'Document'}
-        </Paragraph>
-        <Paragraph style={styles.pageInfo}>
-          Page {currentPage} of {totalPages}
+          📄 {fileName || 'Document'}
         </Paragraph>
       </View>
 
-      <Pdf
-        source={{ uri: fileUrl, cache: true }}
-        onLoadComplete={(numberOfPages) => {
-          setTotalPages(numberOfPages);
+      {webViewLoading && (
+        <View style={styles.webViewLoadingContainer}>
+          <ActivityIndicator size="large" color="#3498db" />
+          <Paragraph style={styles.loadingText}>Loading PDF...</Paragraph>
+        </View>
+      )}
+
+      <WebView
+        source={{ uri: fileUrl }}
+        style={styles.webView}
+        onLoadStart={() => setWebViewLoading(true)}
+        onLoadEnd={() => setWebViewLoading(false)}
+        onError={(syntheticEvent) => {
+          const { nativeEvent } = syntheticEvent;
+          console.error('WebView error:', nativeEvent);
+          Alert.alert('Error', 'Failed to load PDF. Please try again.');
         }}
-        onPageChanged={(page) => {
-          setCurrentPage(page);
-        }}
-        onError={(error) => {
-          console.error('PDF error:', error);
-          Alert.alert('Error', 'Failed to load PDF');
-        }}
-        style={styles.pdf}
-        trustAllCerts={false}
-        enablePaging={true}
+        startInLoadingState={true}
+        scalesPageToFit={true}
+        javaScriptEnabled={true}
+        domStorageEnabled={true}
+        allowFileAccess={true}
       />
     </View>
   );
@@ -127,15 +139,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: '#2c3e50',
-    marginBottom: 5,
   },
-  pageInfo: {
-    fontSize: 12,
-    color: '#7f8c8d',
+  webViewLoadingContainer: {
+    position: 'absolute',
+    top: '50%',
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    zIndex: 1,
   },
-  pdf: {
+  webView: {
     flex: 1,
-    width: Dimensions.get('window').width,
-    backgroundColor: '#ecf0f1',
+    backgroundColor: '#ffffff',
   },
 });
